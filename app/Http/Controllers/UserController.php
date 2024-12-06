@@ -8,7 +8,7 @@ use DB;
 use GuzzleHttp\Psr7\Message;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
@@ -134,7 +134,8 @@ if ($user && Hash::check($request['password'], $user->password)) {
      */
     public function show(string $id)
     {
-        $user  = User::find($id);
+        // $user  = User::find($id);
+        $user = Auth::user();
         if (is_null($user)) {
             return response()->json([
                 'Message' => 'user not founds.'

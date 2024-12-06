@@ -2,11 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GenralController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\PdfController;
-
+use App\Http\Controllers\TokenController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +21,20 @@ use App\Http\Controllers\PdfController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+// $token = $user->tokens->first();
+// $partialToken = substr($newToken, 0, 10) . '...' . substr($newToken, -10);
+
+Route::post('/token/regenerate', [TokenController::class, 'regenerate'])->name('token.regenerate');
+Route::post('/token/revoke', [TokenController::class, 'revoke'])->name('token.revoke');
+Route::post('/token/enable', [TokenController::class, 'enable'])->name('token.enable');
+
 
 // Stripe Payment Gateway
 Route::get('/stripe',[StripeController::class,'index']); 
@@ -99,3 +113,5 @@ Route::get('/reddit/at', [GenralController::class, 'redditAccesToken']);
 // https://www.reddit.com/api/v1/authorize?client_id=I30c67JnyUZGWW0rApqzTg&response_type=code&state=fbshh%20bgsdfnihjbhghsdfj&redirect_uri=http://localhost/apise/public/reddit_callback_url&duration=temporary&scope=identity
 
 // https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=7863ddglco7xbk&redirect_uri=http://127.0.0.1:8000/redirect-back-linkedin&scope=email
+
+

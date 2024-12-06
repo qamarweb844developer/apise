@@ -34,6 +34,7 @@ Route::get('user/update/{id}' , [UserController::class, 'update']);
 
 
 
+// Route::middleware('api.auth')->group(function(){
 Route::middleware('auth:api')->group(function(){
     Route::get('user/fetch/{id}' , [UserController::class, 'show']);
 });
